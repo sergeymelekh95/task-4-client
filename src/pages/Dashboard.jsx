@@ -10,6 +10,7 @@ export const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [isAll, setAll] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -33,10 +34,13 @@ export const Dashboard = () => {
                 },
             };
 
+            setLoading(true);
+
             axios
                 .post(ALL_USERS, { email: userData.email }, config)
                 .then((response) => setUsers(response.data))
-                .catch((err) => navigate('/signup'));
+                .catch((err) => navigate('/signup'))
+                .finally(() => setLoading(false));
         } else {
             navigate('/signup');
         }
@@ -59,10 +63,13 @@ export const Dashboard = () => {
                     },
                 };
 
+                setLoading(true);
+
                 axios
                     .delete(DELETE_USERS, config)
                     .then((response) => getUsers())
-                    .catch((err) => navigate('/signup'));
+                    .catch((err) => navigate('/signup'))
+                    .finally(() => setLoading(false));
 
                 const isAuthorizedUser = selectedUsers.find(
                     (selectedUser) => selectedUser.email === userData.email
@@ -100,6 +107,8 @@ export const Dashboard = () => {
                     status: status,
                 };
 
+                setLoading(true);
+
                 axios
                     .put(UPDATE_USER, body, config)
                     .then((response) => {
@@ -108,7 +117,8 @@ export const Dashboard = () => {
                     })
                     .catch((err) => {
                         navigate('/signup');
-                    });
+                    })
+                    .finally(() => setLoading(false));
             } else {
                 navigate('/signup');
             }
@@ -142,22 +152,22 @@ export const Dashboard = () => {
                 alignItems: 'center',
             }}
         >
-            {users.length ? (
-                <>
-                    <Toolbar
-                        handleDelete={handleDelete}
-                        handleStatus={handleStatus}
-                    />
-                    <TableUsers
-                        users={users}
-                        handleTable={handleTable}
-                        selectedUsers={selectedUsers}
-                        isAll={isAll}
-                        selectAll={selectAll}
-                    />
-                </>
-            ) : (
-                <Loader animation='border' size='lg' />
+            <Toolbar
+                handleDelete={handleDelete}
+                handleStatus={handleStatus}
+                loading={loading}
+            />
+            <div style={{ height: '50px' }}>
+                {loading && <Loader animation='border' size='lg' />}
+            </div>
+            {!!users.length && (
+                <TableUsers
+                    users={users}
+                    handleTable={handleTable}
+                    selectedUsers={selectedUsers}
+                    isAll={isAll}
+                    selectAll={selectAll}
+                />
             )}
         </div>
     );

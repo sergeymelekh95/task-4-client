@@ -12,15 +12,11 @@ export const Main = () => {
                 <Routes>
                     <Route
                         path='/'
-                        element={<Navigate to={'/signup'} replace />}
+                        element={<Navigate to={'/signup'} />}
                     ></Route>
-                    <Route index path='/signin' element={<SignIn />}></Route>
-                    <Route index path='/signup' element={<SignUp />}></Route>
-                    <Route
-                        index
-                        path='/dashboard'
-                        element={<Dashboard />}
-                    ></Route>
+                    <Route path='/signin' element={<SignIn />}></Route>
+                    <Route path='/signup' element={<SignUp />}></Route>
+                    <Route path='/dashboard' element={<Dashboard />}></Route>
                     <Route path='*' element={<NotFound />}></Route>
                 </Routes>
             </Container>
