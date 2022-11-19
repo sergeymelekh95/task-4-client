@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "homepage": "https://users-9ycl.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
