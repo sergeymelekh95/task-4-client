@@ -1,4 +1,4 @@
-const BASE_URL = 'https://users-api.onrender.com';
+const BASE_URL = 'https://users-api-n343.onrender.com';
 // const BASE_URL = 'http://localhost:3001';
 
 export const ALL_USERS = `${BASE_URL}/api/users`;
