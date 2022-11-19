@@ -39,10 +39,10 @@ export const Dashboard = () => {
             axios
                 .post(ALL_USERS, { email: userData.email }, config)
                 .then((response) => setUsers(response.data))
-                .catch((err) => navigate('/signup'))
+                .catch((err) => navigate('/signin'))
                 .finally(() => setLoading(false));
         } else {
-            navigate('/signup');
+            navigate('/signin');
         }
     };
 
@@ -68,7 +68,7 @@ export const Dashboard = () => {
                 axios
                     .delete(DELETE_USERS, config)
                     .then((response) => getUsers())
-                    .catch((err) => navigate('/signup'))
+                    .catch((err) => navigate('/signin'))
                     .finally(() => setLoading(false));
 
                 const isAuthorizedUser = selectedUsers.find(
@@ -77,10 +77,10 @@ export const Dashboard = () => {
 
                 if (isAuthorizedUser) {
                     sessionStorage.removeItem('userData');
-                    navigate('/signup');
+                    navigate('/signin');
                 }
             } else {
-                navigate('/signup');
+                navigate('/signin');
             }
 
             setSelectedUsers([]);
@@ -113,14 +113,13 @@ export const Dashboard = () => {
                     .put(UPDATE_USER, body, config)
                     .then((response) => {
                         getUsers();
-                        console.log(response);
                     })
                     .catch((err) => {
-                        navigate('/signup');
+                        navigate('/signin');
                     })
                     .finally(() => setLoading(false));
             } else {
-                navigate('/signup');
+                navigate('/signin');
             }
 
             setSelectedUsers([]);
