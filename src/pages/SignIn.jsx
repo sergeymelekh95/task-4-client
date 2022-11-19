@@ -24,11 +24,10 @@ export const SignIn = () => {
     const onSubmit = (data) => {
         setLoading(true);
 
-        sessionStorage.removeItem('userData');
-
         axios
             .post(AUTHENTICATION, data)
             .then((response) => {
+                sessionStorage.removeItem('userData');
                 sessionStorage.setItem(
                     'userData',
                     JSON.stringify(response.data)
